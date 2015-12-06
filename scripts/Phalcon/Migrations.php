@@ -136,6 +136,7 @@ class Migrations
     public static function run(array $options)
     {
         $path = $options['directory'];
+        $env = $options['env'];
 
         $migrationsDir = $options['migrationsDir'];
         if (!file_exists($migrationsDir)) {
@@ -181,7 +182,8 @@ class Migrations
             mkdir($path.'.phalcon');
         }
 
-        $migrationFid = $path.'.phalcon/migration-version';
+
+        $migrationFid = $path.'.phalcon/migration-version-'.$env;
         $initialVersion = new VersionItem(file_exists($migrationFid) ? file_get_contents($migrationFid) : null);
 
         if ($initialVersion->getStamp() == $finalVersion->getStamp()) {

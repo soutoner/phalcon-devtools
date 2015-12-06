@@ -58,6 +58,7 @@ class Migration extends Command
             'force'             => 'Forces to overwrite existing migrations',
             'no-auto-increment' => 'Disable auto increment (Generating only)',
             'data=s'            => 'Export data [always|oncreate] (Import data when run migration)',
+            'env=s'             => 'Change environment if necessary (migration-version)',
         );
     }
 
@@ -112,6 +113,8 @@ class Migration extends Command
 
         $version = $this->getOption('version');
 
+        $env = $this->getOption('env', null, 'dev');
+
         if ($action == 'generate') {
             Migrations::generate(array(
                 'directory'       => $path,
@@ -132,6 +135,7 @@ class Migration extends Command
                     'force'         => $this->isReceivedOption('force'),
                     'config'        => $config,
                     'version'       => $version,
+                    'env'           => $env,
                 ));
             }
         }
